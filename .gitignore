@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+.idea
+**/venv/
+
+.env-render
+src/__pycache__/main.cpython-311.pyc

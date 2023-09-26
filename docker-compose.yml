@@ -2,9 +2,9 @@ services:
   app:
     build: .
     container_name: press_python-server
-    command: uvicorn src.main:app --host 0.0.0.0 --port 80 --reload
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
     ports:
-      - 80:80
+      - 8000:8000
       - 5678:5678
     volumes:
       - .:/press
@@ -13,18 +13,17 @@ services:
     depends_on:
       - db
   db:
-    image: postgres:15-alpine
-    container_name: postgres
-    restart: always
+    container_name: press_bd
     ports:
-      - '5432:5432'
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - '5555:5432'
     environment:
-      - POSTGRES_DB=postgres
       - POSTGRES_USER=pguser
       - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    image: postgres:15
+#     volumes:
+#       - postgres_data:
       
 
-volumes:
-  postgres_data:
+# volumes:
+#   postgres_data:
