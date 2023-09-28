@@ -1,6 +1,5 @@
 
-import os
-import sys
+
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -8,10 +7,13 @@ from sqlalchemy import pool
 
 from alembic import context
 
+import os
+import sys
 sys.path.append(os.path.join(sys.path[0], 'src'))
 
-from src.config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
-from src.models.models import metadata
+from config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
+from src.auth.models import metadata as metadata_auth
+from src.operations.models import metadata as metadata_operations
 
 
 # this is the Alembic Config object, which provides
@@ -34,7 +36,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = metadata
+target_metadata = [metadata_auth, metadata_operations]
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
