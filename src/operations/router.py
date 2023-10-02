@@ -15,9 +15,13 @@ router = APIRouter(
 @router.get("/const")
 async def get_const_params(exp_tag: str,
                            session: AsyncSession = Depends(get_async_session)):
+    # try:
     query = select(input_const_params).where(input_const_params.c.experiment_tag == exp_tag)
     result = await session.execute(query)
-    return [dict(r._mapping) for r in result]
+    # TODO дописать обработку except после их осознания
+    return {'status': 'success',
+            'data': [dict(r._mapping) for r in result],
+            'details': None}
 
 @router.post("/const")
 async def add_const_params(new_operation: ConstParamsCreate,
@@ -32,8 +36,9 @@ async def get_variable_params(exp_tag: str,
                               session: AsyncSession = Depends(get_async_session)):
     query = select(input_variable_params).where(input_variable_params.c.experiment_tag == exp_tag)
     result = await session.execute(query)
-    print(result)
-    return [dict(r._mapping) for r in result]
+    return {'status': 'success',
+            'data': [dict(r._mapping) for r in result],
+            'details': None}
 
 @router.post("/variable")
 async def add_variable_params(new_operation: VariableParamsCreate,
