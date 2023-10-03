@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database import get_async_session
+from ..database import get_async_session
 from .models import input_const_params, input_variable_params
 from .schemas import ConstParamsCreate, VariableParamsCreate
 

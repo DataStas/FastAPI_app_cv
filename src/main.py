@@ -7,7 +7,8 @@ from .auth.schemas import UserRead, UserCreate
 from redis import asyncio as aioredis
 from config import REDIS_HOST, REDIS_PORT
 
-from src.operations.router import router as router_operation
+from .operations.router import router as router_operation
+from .tasks.router import router as router_tasks
 
 app = FastAPI(
     title="Press App"
@@ -25,7 +26,8 @@ app.include_router(
     tags=["Auth"],
 )
 
-app.include_router(router_operation)
+app.include_router(router_operation)#
+app.include_router(router_tasks)
 
 
 @app.on_event("startup")
