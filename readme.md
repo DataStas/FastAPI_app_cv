@@ -4,6 +4,7 @@
 План запуска для разработки:
 
 1. Для запуска запустить docker-compose.yml (в будущем и все, а пока...)
+sudo docker compose -f "docker-compose.yml" up -d --build 
 2. Создать venv 
 2.1. python3.11 -m venv venv
 2.2. source ./venv/bin/activate

@@ -26,8 +26,9 @@ app.include_router(
     tags=["Auth"],
 )
 
-app.include_router(router_operation)#
+app.include_router(router_operation)
 app.include_router(router_tasks)
+
 
 
 @app.on_event("startup")

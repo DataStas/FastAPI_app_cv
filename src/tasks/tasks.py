@@ -6,6 +6,7 @@ from celery import Celery
 
 from config import SMTP_PASSWORD, SMTP_USER, REDIS_HOST, REDIS_PORT
 
+
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 465
 
@@ -17,15 +18,23 @@ def get_email_template(username: str):
     email['Subject'] = 'Отчёт'
     email['From'] = SMTP_USER
     email['Date'] = formatdate(localtime=True)
-    email['To'] = SMTP_USER
-
-    email.set_content(open('/pdfs/1.pdf').read())
+    email['To'] = email
+    email.set_content(
+        '<div>'
+        f'<h1 style="color: red;">Здравствуйте, {username}, ваш отчет готов. Зацените 😊</h1>'
+        '</div>',
+        subtype='html'
+    )
     return email
 
 
 @celery.task
-def send_email_report(username: str):
-    email = get_email_template(username)
+def send_email_report(username: str, email: str):
+    email = get_email_template(username, email)
     with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT) as server:
         server.login(SMTP_USER, SMTP_PASSWORD)
         server.send_message(email)
+        
+@celery.task
+def calculate_pdf(username: str, email: str, id: int):
+    pass
