@@ -1,20 +1,7 @@
 services:
-  app:
-    build: .
-    container_name: press_python-server
-    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
-    ports:
-      - 8000:8000
-      - 5678:5678
-    volumes:
-      - .:/press
-    environment:
-      - DATABASE_URL=postgresql://pguser:password@db:5432/press 
-    depends_on:
-      - db
-      - redis
+
   db:
-    container_name: press_bd
+    container_name: db_app
     ports:
       - '5555:5432'
     environment:
@@ -29,9 +16,43 @@ services:
     command: --port 5370
     expose:
       - 5370
-#     volumes:
-#       - postgres_data:
-      
 
-# volumes:
-#   postgres_data:
+  app:
+    build:
+      context: .
+    container_name: press
+    # command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+    command: alembic upgrade head && chmod a+x docker/app.sh
+    ports:
+      - 8000:8000
+      - 5678:5678
+    volumes:
+      - .:/press
+    environment:
+      - DATABASE_URL=postgresql://pguser:password@db:5432/press 
+    depends_on:
+      - db
+      - redis
+  
+  celery:
+    build:
+      context: .
+    env_file:
+      - .env
+    container_name: celery_app
+    command: ls && chmod a+x docker/celery.sh 'celery'
+    depends_on:
+      - redis
+
+  flower:
+    build:
+      context: .
+    env_file:
+      - .env
+    container_name: flower_app
+    command: ls && chmod a+x docker/celery.sh 'flower'
+    depends_on:
+      - redis
+      - celery
+    ports:
+      - 8888:5555
