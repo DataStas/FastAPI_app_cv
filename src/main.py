@@ -5,7 +5,7 @@ from fastapi_cache.backends.redis import RedisBackend
 from .auth.base_config import auth_backend, fastapi_users
 from .auth.schemas import UserRead, UserCreate
 from redis import asyncio as aioredis
-from config import REDIS_HOST, REDIS_PORT
+from src.config import REDIS_HOST, REDIS_PORT
 
 from .operations.router import router as router_operation
 from .tasks.router import router as router_tasks

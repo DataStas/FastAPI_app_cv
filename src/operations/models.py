@@ -1,6 +1,6 @@
 from sqlalchemy import Table, Column, Integer, Float, MetaData, String
 
-metadata = MetaData()
+from src.database import metadata
 
 input_const_params = Table(
     "input_const",

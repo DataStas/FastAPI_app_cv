@@ -20,6 +20,16 @@ services:
     command: --port 5370
     expose:
       - 5370
+  
+  db_test:
+    container_name: press_bd_test
+    ports:
+      - '5556:5432'
+    environment:
+      - POSTGRES_USER=pguser
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    image: postgres:15
 
   app:
     build:
@@ -33,10 +43,12 @@ services:
     volumes:
       - .:/press
     environment:
-      - DATABASE_URL=postgresql://pguser:password@db:5432/press 
+      - DATABASE_URL=postgresql://pguser:password@db:5432/press
+      - DATABASE_URL=postgresql://pguser:password@db_test:5432/press  
     depends_on:
       - db
       - redis
+      - db_test
   
   celery:
     build:

@@ -4,7 +4,7 @@ from email.utils import formatdate
 
 from celery import Celery
 
-from config import SMTP_PASSWORD, SMTP_USER, REDIS_HOST, REDIS_PORT
+from src.config import SMTP_PASSWORD, SMTP_USER, REDIS_HOST, REDIS_PORT
 
 
 SMTP_HOST = "smtp.gmail.com"
