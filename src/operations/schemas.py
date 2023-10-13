@@ -16,7 +16,7 @@ class ConstParamsCreate(BaseModel):
     
     
 class VariableParamsCreate(BaseModel):
-    id : int
+    id: int
     speed_in_press: float
     speed_out_press: float
     force_press: float
