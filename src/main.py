@@ -9,6 +9,7 @@ from src.config import REDIS_HOST, REDIS_PORT
 
 from .operations.router import router as router_operation
 from .tasks.router import router as router_tasks
+from .model.press_imitation import router as router_model
 
 app = FastAPI(
     title="Press App"
@@ -28,7 +29,7 @@ app.include_router(
 
 app.include_router(router_operation)
 app.include_router(router_tasks)
-
+app.include_router(router_model)
 
 
 @app.on_event("startup")

@@ -39,19 +39,3 @@ def test_register():
     })
 
     assert response.status_code == 201
-    
-
-def register():
-    response = client.post("/auth/register", json={
-        "email": "autoemailbotss@gmail.com",
-        "password": "string",
-        "is_active": True,
-        "is_superuser": False,
-        "is_verified": False,
-        "username": "Petya",
-        "role_id": 1
-    })
-    return response
-
-def test_register(register):
-    assert register().status_code == 201
