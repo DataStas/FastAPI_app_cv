@@ -1,4 +1,4 @@
-from sqlalchemy import Table, Column, Integer, Float, MetaData, String
+from sqlalchemy import Table, Column, Integer, Float, String
 
 from src.database import metadata
 
@@ -22,20 +22,20 @@ input_variable_params = Table(
     "input_variable",
     metadata,
     Column("id", Integer, primary_key=True),
-    Column("SpeedInPress", Float),
-    Column("SpeedOutPress", Float),
-    Column("ForcePress", Float),
-    Column("ForceRetention", Float),
-    Column("TimeToWait", Float),
-    Column("TimeToUnloading", Float),
-    Column("PressNumber", Integer),
-    Column("PprUpdate", Integer),
-    Column("TimeDelayPowder", Float),
-    Column("TimeDelayPallet", Float),
-    Column("TimeDelayPpr", Float),
-    Column("NumberOfContainers", Integer),
-    Column("PowderDensity", Float),
-    Column("PowderMass", Integer),
-    Column("SignalManualControl", Integer),
+    Column("speed_in_press", Float),
+    Column("speed_out_press", Float),
+    Column("force_press", Float),
+    Column("force_retention", Float),
+    Column("time_to_wait", Float),
+    Column("time_to_unloading", Float),
+    Column("press_number", Integer),
+    Column("ppr_update", Integer),
+    Column("time_delay_powder", Float),
+    Column("time_delay_pallet", Float),
+    Column("time_delay_ppr", Float),
+    Column("number_of_containers", Integer),
+    Column("powder_density", Float),
+    Column("powder_mass", Integer),
+    Column("signal_manual_control", Integer),
     Column("experiment_tag", String)
 )

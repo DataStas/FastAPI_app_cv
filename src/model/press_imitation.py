@@ -18,15 +18,20 @@ async def get_variable_params(exp_tag: str,
                               id: int, 
                               session: AsyncSession = Depends(get_async_session),
                               user=Depends(current_user)):
-    exp_condition = input_variable_params.c.experiment_tag == exp_tag
-    id_condition = input_variable_params.c.id == id
-    query = select(input_variable_params).where(exp_condition and id_condition)
+    id_cond = (input_variable_params.c.id == id)
+    exp_cond = (input_variable_params.c.experiment_tag == exp_tag)
+    query = select(input_variable_params).where((input_variable_params.c.id == id)&
+                                                (input_variable_params.c.experiment_tag == exp_tag))
     result = await session.execute(query)
     var_data = [dict(r._mapping) for r in result]
-    query = select(input_const_params).where(exp_condition and id_condition)
+    id_cond = (input_const_params.c.id == id)
+    exp_cond = (input_const_params.c.experiment_tag == exp_tag)
+    query = select(input_const_params).where((input_const_params.c.id == id)&
+                                             (input_const_params.c.experiment_tag == exp_tag))
     result = await session.execute(query)
     const_data = [dict(r._mapping) for r in result],
+    var_data += const_data
     
     return {'status': 'success',
-            'data': var_data+const_data,
+            'data': var_data,
             'details': None}
